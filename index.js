@@ -14,11 +14,39 @@ const layer = new TileLayer(
     subdomains: '1234',
   }
 );
-// const tdtoneLayer = new TileLayer(
-//   'http://t0.tianditu.gov.cn/img_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={x}&TILECOL={y}&tk=c2190c0317e3b3e264124b7fc7a9ec7d'
-// );
-// const tdttwoLayer = new TileLayer(
-//   'http://http://t0.tianditu.gov.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={z}&TILEROW={x}&TILECOL={y}&tk=c2190c0317e3b3e264124b7fc7a9ec7d'
-// );
-layer.addTo(map);
-map.setView([39, 117], 10);
+const tdtoneLayer = new TileLayer(
+  'http://t0.tianditu.gov.cn/vec_w/wmts?layer=vec&style=default&TILEMATRIXSET=w&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&FORMAT=tiles&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&tk=c2190c0317e3b3e264124b7fc7a9ec7d'
+);
+const tdttwoLayer = new TileLayer(
+  'http://t0.tianditu.gov.cn/cva_w/wmts?layer=cva&style=default&TILEMATRIXSET=w&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&FORMAT=tiles&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&tk=c2190c0317e3b3e264124b7fc7a9ec7d'
+);
+const tdtthrLayer = new TileLayer(
+  'http://t0.tianditu.gov.cn/img_w/wmts?layer=img&style=default&TILEMATRIXSET=w&SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&FORMAT=tiles&TILEMATRIX={z}&TILECOL={x}&TILEROW={y}&tk=c2190c0317e3b3e264124b7fc7a9ec7d'
+);
+// layer.addTo(map);
+// map.setView([39.958, 116.395], 16);
+tdtoneLayer.addTo(map); //默认展示第一个
+map.setView([39.958, 116.395], 16);
+
+const items = document.getElementsByName('base');
+items.forEach((item) => {
+  item.onclick = (evt) => {
+    switch (evt.target.value) {
+      case 'amap':
+        tdttwoLayer.removeFrom(map);
+        tdtthrLayer.removeFrom(map);
+        tdtoneLayer.addTo(map);
+        break;
+      case 'tdt':
+        tdtoneLayer.removeFrom(map);
+        tdtthrLayer.removeFrom(map);
+        tdttwoLayer.addTo(map);
+        break;
+      case 'tdtyx':
+        tdtoneLayer.removeFrom(map);
+        tdttwoLayer.removeFrom(map);
+        tdtthrLayer.addTo(map);
+        break;
+    }
+  };
+});
